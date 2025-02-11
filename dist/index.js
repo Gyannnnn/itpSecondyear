@@ -7,13 +7,13 @@ require('dotenv').config();
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+//IMPORTS
+const students_routes_1 = __importDefault(require("./routes/students.routes"));
+//MIDDLEWARES
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.get("/home", (req, res) => {
-    res.json({
-        message: "Hello World"
-    });
-});
+//ROUTES
+app.use("/api/v1/students", students_routes_1.default);
 app.listen(process.env.PORT || 3001, () => {
     console.log(`Server is running at http://localhost:${process.env.PORT || 3001}`);
 });
