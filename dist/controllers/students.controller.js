@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllRegesteredStudents = exports.createStudent = exports.hello = void 0;
+exports.getstudentbyrgestrationNumber = exports.getAllRegesteredStudents = exports.createStudent = exports.hello = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const hello = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,19 +42,19 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             }
         });
         if (!regesteredStudents) {
-            res.json({
+            res.status(400).json({
                 message: "Something went wrong"
             });
             return;
         }
-        res.json({
+        res.status(201).json({
             message: "Student Regestered Successfully",
             data: regesteredStudents
         });
     }
     catch (error) {
         const err = error;
-        res.json({
+        res.status(400).json({
             message: err.message
         });
     }
@@ -64,21 +64,53 @@ const getAllRegesteredStudents = (req, res) => __awaiter(void 0, void 0, void 0,
     try {
         const regesteredStudents = yield prisma.students.findMany();
         if (!regesteredStudents || regesteredStudents.length === 0) {
-            res.json({
+            res.status(404).json({
                 message: "No Students Regestered"
             });
             return;
         }
-        res.json({
+        res.status(200).json({
             message: "All Regestered Students",
             data: regesteredStudents
         });
     }
     catch (error) {
         const err = error;
-        res.json({
+        res.status(400).json({
             message: err.message
         });
     }
 });
 exports.getAllRegesteredStudents = getAllRegesteredStudents;
+const getstudentbyrgestrationNumber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { registrationNumber } = req.body;
+    if (!registrationNumber) {
+        res.status(400).json({
+            message: " Registration number required"
+        });
+    }
+    try {
+        const student = yield prisma.students.findUnique({
+            where: {
+                registrationNumber
+            }
+        });
+        if (!student) {
+            res.status(404).json({
+                message: "Student not found"
+            });
+            return;
+        }
+        res.status(200).json({
+            message: "Student found",
+            data: student
+        });
+    }
+    catch (error) {
+        const err = error;
+        res.status(400).json({
+            message: err.message
+        });
+    }
+});
+exports.getstudentbyrgestrationNumber = getstudentbyrgestrationNumber;

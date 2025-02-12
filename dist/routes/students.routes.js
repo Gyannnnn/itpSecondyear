@@ -9,4 +9,5 @@ const students_controller_1 = require("../controllers/students.controller");
 studentRouter.get("/", students_controller_1.hello);
 studentRouter.post("/newregestration", students_controller_1.createStudent);
 studentRouter.get("/getall", students_controller_1.getAllRegesteredStudents);
+studentRouter.get("/regdno", students_controller_1.getstudentbyrgestrationNumber);
 exports.default = studentRouter;

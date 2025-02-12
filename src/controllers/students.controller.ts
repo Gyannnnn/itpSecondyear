@@ -36,18 +36,18 @@ export const createStudent = async(req:Request,res:Response)=>{
             }
         })
         if(!regesteredStudents){
-            res.json({
+            res.status(400).json({
                 message:"Something went wrong"
             })
             return;
         }
-        res.json({
+        res.status(201).json({
             message:"Student Regestered Successfully",
             data:regesteredStudents
         })
     } catch (error) {
         const err = error as Error;
-        res.json({
+        res.status(400).json({
             message:err.message
         })
         
@@ -58,19 +58,53 @@ export const getAllRegesteredStudents = async(req:Request,res:Response)=>{
     try {
         const regesteredStudents = await prisma.students.findMany();
         if(!regesteredStudents || regesteredStudents.length === 0){
-            res.json({
+            res.status(404).json({
                 message:"No Students Regestered"
             })
             return;
         }
-        res.json({
+        res.status(200).json({
             message:"All Regestered Students",
             data:regesteredStudents
         })
         
     } catch (error) {
         const err  = error as Error;
-        res.json({
+        res.status(400).json({
+            message:err.message
+        })
+        
+    }
+}
+
+export const getstudentbyrgestrationNumber = async(req:Request,res:Response)=>{
+    const {registrationNumber} = req.body;
+    if(!registrationNumber){
+        res.status(400).json({
+            message:" Registration number required"
+        })
+
+    }
+    try {
+        const student = await prisma.students.findUnique({
+            where:{
+                registrationNumber
+            }
+        })
+        if(!student){
+            res.status(404).json({
+                message:"Student not found"
+            })
+            return;
+        }
+        res.status(200).json({
+            message:"Student found",
+            data:student
+        })
+        
+    } catch (error) {
+        const err = error as Error
+        res.status(400).json({
             message:err.message
         })
         
