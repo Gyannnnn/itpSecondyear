@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Students" ALTER COLUMN "section" DROP NOT NULL,
+ALTER COLUMN "projectLink1" DROP NOT NULL,
+ALTER COLUMN "projectLink2" DROP NOT NULL;

@@ -20,10 +20,12 @@ const hello = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 exports.hello = hello;
 const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, gender, email, registrationNumber, branch, section, whatsappNo, primaryDomain, secondaryDomain, githubUrl, projectLink1, projectLink2, resumeLink } = req.body;
-    if (!name || !gender || !email || !registrationNumber || !branch || !section || !whatsappNo || !primaryDomain || !secondaryDomain || !githubUrl || !projectLink1 || !projectLink2 || name.trim().length === 0 || gender.trim().length === 0 || email.trim().length === 0 || registrationNumber.trim().length === 0 || branch.trim().length === 0 || section.trim().length === 0 || whatsappNo.trim().length === 0 || primaryDomain.trim().length === 0 || secondaryDomain.trim().length === 0 || githubUrl.trim().length === 0 || projectLink1.trim().length === 0 || projectLink2.trim().length === 0) {
-        res.status(400).json({
-            message: "All fields are required"
-        });
+    if (!name || !gender || !email || !registrationNumber || !branch || !whatsappNo ||
+        !primaryDomain || !secondaryDomain || !githubUrl ||
+        name.trim().length === 0 || gender.trim().length === 0 || email.trim().length === 0 ||
+        registrationNumber.trim().length === 0 || branch.trim().length === 0 || whatsappNo.trim().length === 0 ||
+        primaryDomain.trim().length === 0 || secondaryDomain.trim().length === 0 || githubUrl.trim().length === 0) {
+        res.status(400).json({ message: "All required fields must be filled" });
         return;
     }
     const isregdExist = yield prisma.students.findUnique({

@@ -14,12 +14,12 @@ model Students {
   email              String     @unique
   registrationNumber String     @unique
   branch             String
-  section            String
+  section            String?
   whatsappNo         String
   primaryDomain      String
   secondaryDomain    String
   githubUrl          String
-  projectLink1       String
-  projectLink2       String
+  projectLink1       String?
+  projectLink2       String?
   resumeLink         String?
 }
