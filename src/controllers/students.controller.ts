@@ -11,12 +11,23 @@ export const hello = async(req:Request,res:Response)=>{
 }
 
 export const createStudent = async(req:Request,res:Response)=>{
-    const {name,gender,graduationYear,email,registrationNumber,branch,section,whatsappNo,primaryDomain,secondaryDomain} = req.body;
-
-    if(!name || !gender || !graduationYear || !email || !registrationNumber || !branch || !section || !whatsappNo || !primaryDomain || !secondaryDomain || name ==="" || gender ==="" || graduationYear ==="" || email ==="" || registrationNumber ==="" || branch ==="" || section ==="" || whatsappNo ==="" || primaryDomain ==="" || secondaryDomain ===""){
-        res.json({
-            message:"Please fill all the fields"
+    const{name,gender,email,registrationNumber,branch,section,whatsappNo,primaryDomain,secondaryDomain,githubUrl,projectLink1,projectLink2,resumeLink} = req.body
+    if(!name || !gender || !email || !registrationNumber || !branch || !section || !whatsappNo || !primaryDomain || !secondaryDomain || !githubUrl || !projectLink1 || !projectLink2 ||  name.trim().length === 0 || gender.trim().length === 0 || email.trim().length === 0 || registrationNumber.trim().length === 0 || branch.trim().length === 0 || section.trim().length === 0 || whatsappNo.trim().length === 0 || primaryDomain.trim().length === 0 || secondaryDomain.trim().length === 0 || githubUrl.trim().length === 0 || projectLink1.trim().length === 0 || projectLink2.trim().length === 0 ){
+        res.status(400).json({
+            message:"All fields are required"
         })
+        return;
+    }
+
+    const isregdExist = await prisma.students.findUnique({
+        where:{
+            registrationNumber
+        }
+    })
+    if(isregdExist){
+        res.status(400).json({
+            message:"Student already exists"
+        });
         return;
     }
 
@@ -24,15 +35,19 @@ export const createStudent = async(req:Request,res:Response)=>{
         const regesteredStudents = await prisma.students.create({
             data:{
                 name,
-                gender,
-                graduationYear,
+                gender,               
                 email,
                 registrationNumber,
                 branch,
                 section,
                 whatsappNo,
                 primaryDomain,
-                secondaryDomain
+                secondaryDomain,
+                githubUrl,
+                projectLink1,
+                projectLink2,
+                resumeLink
+                
             }
         })
         if(!regesteredStudents){
