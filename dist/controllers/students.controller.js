@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getstudentbyrgestrationNumber = exports.getAllRegesteredStudents = exports.createStudent = exports.hello = void 0;
+exports.closed = exports.getstudentbyrgestrationNumber = exports.getAllRegesteredStudents = exports.createStudent = exports.hello = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const hello = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -130,3 +130,9 @@ const getstudentbyrgestrationNumber = (req, res) => __awaiter(void 0, void 0, vo
     }
 });
 exports.getstudentbyrgestrationNumber = getstudentbyrgestrationNumber;
+const closed = (req, res) => {
+    res.status(400).json({
+        message: "Regestration closed"
+    });
+};
+exports.closed = closed;

@@ -10,4 +10,5 @@ studentRouter.get("/", students_controller_1.hello);
 studentRouter.post("/newregestration", students_controller_1.createStudent);
 studentRouter.get("/getall", students_controller_1.getAllRegesteredStudents);
 studentRouter.get("/regdno", students_controller_1.getstudentbyrgestrationNumber);
+studentRouter.post("/closed", students_controller_1.closed);
 exports.default = studentRouter;

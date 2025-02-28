@@ -130,3 +130,8 @@ export const getstudentbyrgestrationNumber = async(req:Request,res:Response)=>{
         
     }
 }
+export const closed = (req:Request,res:Response)=>{
+    res.status(400).json({
+        message: "Regestration closed"
+    })
+}
