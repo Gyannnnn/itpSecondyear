@@ -52,9 +52,6 @@ const createStudent = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 primaryDomain,
                 secondaryDomain,
                 githubUrl,
-                projectLink1,
-                projectLink2,
-                resumeLink
             }
         });
         if (!regesteredStudents) {

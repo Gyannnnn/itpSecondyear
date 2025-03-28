@@ -49,9 +49,6 @@ export const createStudent = async(req:Request,res:Response)=>{
                 primaryDomain,
                 secondaryDomain,
                 githubUrl,
-                projectLink1,
-                projectLink2,
-                resumeLink
                 
             }
         })
